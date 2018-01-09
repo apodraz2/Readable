@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import PostList from './PostList';
 import './App.css';
 
 class App extends Component {
@@ -11,30 +11,30 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = `${process.env.REACT_APP_BACKEND}/categories`;
+    const url = `${process.env.REACT_APP_BACKEND}/posts`;
     console.log('fetching from url', url);
     fetch(url, { headers: { 'Authorization': 'whatever-you-want' },
                  credentials: 'include' } )
       .then( (res) => { return(res.text()) })
       .then((data) => {
-        this.setState({backend:data});
+      	
+      	const jsonData = JSON.parse(data);
+      	console.log(data);
+        this.setState({backend:jsonData});
       });
   }
 
   render() {
+    
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h1>Readable</h1>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Talking to the backend yields these categories: <br/>
-          {this.state.backend}
-        </p>
+        
+        <div>
+          <PostList posts={this.state.backend}/>
+        </div>
       </div>
     );
   }
