@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addPost } from '../actions';
 import PostList from './PostList';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      backend: 'backend-data'
-    }
-  }
 
   componentDidMount() {
+    
     const url = `${process.env.REACT_APP_BACKEND}/posts`;
+    
     console.log('fetching from url', url);
     fetch(url, { headers: { 'Authorization': 'whatever-you-want' },
                  credentials: 'include' } )
-      .then( (res) => { return(res.text()) })
-      .then((data) => {
+      		.then( (res) => { return(res.text()) })
+      		.then((data) => {
       	
-      	const jsonData = JSON.parse(data);
-      	console.log(data);
-        this.setState({backend:jsonData});
-      });
+      			const jsonData = JSON.parse(data);
+      			
+      			this.props.addPost({posts: jsonData});
+      			
+      		})
   }
 
   render() {
     
+    console.log(this.props);
     return (
       <div className="App">
         <div className="App-header">
@@ -33,11 +33,24 @@ class App extends Component {
         </div>
         
         <div>
-          <PostList posts={this.state.backend}/>
+          <PostList postList={this.props.posts}/>
         </div>
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps({posts}) {
+  
+	return {
+     	 posts: posts
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+ 	return {
+     	addPost: (data) => dispatch(addPost(data)) 
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

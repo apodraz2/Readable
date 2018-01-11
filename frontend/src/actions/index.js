@@ -1,8 +1,8 @@
 export const ADD_POSTS = 'ADD_POSTS';
 
-export function addPost({post}) {
+export function addPost({posts}) {
  	return {
      	type: ADD_POSTS,
-      		post
+      		posts
     }
 };

@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 
 class PostList extends Component {
   render() {
-    const postList = this.props.posts;
-    
+    const postList = this.props.postList.posts;
+    console.log(postList);
   	return (
       
       <div>
       <ol className="postList">
-      {typeof postList !== "string" && postList.map((post) => (
+      
+      
+      {typeof postList !== 'undefined' && postList.length > 0 && postList.map((post) => (
        	<li key={post.id}>
       		<h3>{post.title}</h3>
       		<p>{post.body}</p>

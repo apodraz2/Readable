@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
 import { ADD_POSTS } from '../actions';
 
-function posts (state={}, action) {
+function posts (state = {posts: []}, action) {
 	switch(action.type) {
       case ADD_POSTS:
-        const { post } = action;
+        const { posts } = action;
+        console.log(action);
         return {
         	...state,
-          	[post]: post
+          	posts
         }
       default:
         return state;
