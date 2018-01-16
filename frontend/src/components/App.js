@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addPost } from '../actions';
+import * as Actions from '../actions';
 import PostList from './PostList';
+import * as API from '../utils/api';
 import './App.css';
 
 class App extends Component {
 
   componentDidMount() {
-    
-    const url = `${process.env.REACT_APP_BACKEND}/posts`;
-    
-    console.log('fetching from url', url);
-    fetch(url, { headers: { 'Authorization': 'whatever-you-want' },
-                 credentials: 'include' } )
-      		.then( (res) => { return(res.text()) })
-      		.then((data) => {
+    API.fetchPosts().then((posts) => {
+      	console.log(posts);
+     	this.props.fetchPosts(posts);
       	
-      			const jsonData = JSON.parse(data);
-      			
-      			this.props.addPost({posts: jsonData});
-      			
-      		})
+    });
+    
   }
 
   render() {
@@ -49,7 +42,7 @@ function mapStateToProps({posts}) {
 
 function mapDispatchToProps(dispatch) {
  	return {
-     	addPost: (data) => dispatch(addPost(data)) 
+     	fetchPosts: (data) => dispatch(Actions.fetchPosts(data)) 
     }
 }
 

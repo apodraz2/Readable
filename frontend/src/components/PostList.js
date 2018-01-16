@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 class PostList extends Component {
   render() {
+    console.log(this.props);
     const postList = this.props.postList.posts;
     console.log(postList);
   	return (

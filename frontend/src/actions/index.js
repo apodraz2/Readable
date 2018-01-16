@@ -1,8 +1,8 @@
-export const ADD_POSTS = 'ADD_POSTS';
+export const FETCH_POSTS = 'FETCH_POSTS';
 
-export function addPost({posts}) {
+export function fetchPosts(posts) {
  	return {
-     	type: ADD_POSTS,
-      		posts
+     	type: FETCH_POSTS,
+      	posts
     }
 };
