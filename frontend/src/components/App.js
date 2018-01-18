@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from '../actions';
-import PostList from './PostList';
+
 import * as API from '../utils/api';
+import { Route } from 'react-router-dom';
+import MainPage from './pages/MainPage';
+import DetailPage from './pages/DetailPage';
 import './App.css';
 
 class App extends Component {
@@ -21,13 +24,12 @@ class App extends Component {
     console.log(this.props);
     return (
       <div className="App">
-        <div className="App-header">
-          <h1>Readable</h1>
-        </div>
-        
-        <div>
-          <PostList postList={this.props.posts}/>
-        </div>
+        <Route exact path='/' render={() => (
+          <MainPage postList={this.props.posts} />
+        )}/>
+		<Route exact path='/:category/:id' render={() => (
+        	<DetailPage />                                           
+        )}/>
       </div>
     );
   }

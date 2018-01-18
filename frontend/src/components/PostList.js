@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import * as Date from '../utils/date.js';
 
 class PostList extends Component {
   render() {
@@ -7,22 +8,22 @@ class PostList extends Component {
     console.log(postList);
   	return (
       
-      <div>
-      <ol className="postList">
+      	<ol className="postList">
       
       
-      {typeof postList !== 'undefined' && postList.length > 0 && postList.map((post) => (
-       	<li key={post.id}>
-      		<h3>{post.title}</h3>
-      		<p>{post.body}</p>
-      		<h6>Score: {post.voteScore}</h6>
-      		<h6>Author: {post.author}</h6>
+      		{typeof postList !== 'undefined' && postList.length > 0 && postList.map((post) => (
+       			<li key={post.id} className='postListItem'>
+      				<p>Posted on: {Date.getMonth(post.timestamp)}/{Date.getDay(post.timestamp)}/{Date.getYear(post.timestamp)}</p>
+      				<h3>{post.title}</h3>
+      				<p>{post.body}</p>
+      				<h6>Score: {post.voteScore}</h6>
+      				<h6>Author: {post.author}</h6>
       		
-      	</li>
-       ))
-  	}
-      </ol>
-      </div>
+      			</li>
+       		))
+  			}
+      	</ol>
+      
       
     )
   }

@@ -5,5 +5,9 @@ body {
 }
 
 .postList {
- list-style: none; 
+ 	list-style: none; 
+}
+
+.postListItem{
+	outline-style: solid; 
 }
