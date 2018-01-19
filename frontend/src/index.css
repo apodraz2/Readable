@@ -4,10 +4,22 @@ body {
   font-family: sans-serif;
 }
 
+.title {
+ 	text-align: center; 
+}
+
 .postList {
  	list-style: none; 
+  	float: left;
 }
 
 .postListItem{
+  	
 	outline-style: solid; 
+  	width: 65%;
+  	
+}
+
+a {
+ 	text-decoration: none;
 }

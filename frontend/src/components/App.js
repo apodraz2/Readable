@@ -27,9 +27,10 @@ class App extends Component {
         <Route exact path='/' render={() => (
           <MainPage postList={this.props.posts} />
         )}/>
-		<Route exact path='/:category/:id' render={() => (
-        	<DetailPage />                                           
+		<Route exact path="/:category/:id" component={(params) => (
+                        <DetailPage postList={this.props.posts} id={params.match.params.id}/>
         )}/>
+                                                     
       </div>
     );
   }
