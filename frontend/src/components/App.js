@@ -6,6 +6,7 @@ import * as API from '../utils/api';
 import { Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
+import CategoryPage from './pages/CategoryPage';
 import './App.css';
 
 class App extends Component {
@@ -29,6 +30,9 @@ class App extends Component {
         )}/>
 		<Route exact path="/:category/:id" component={(params) => (
                         <DetailPage postList={this.props.posts} id={params.match.params.id}/>
+        )}/>
+		<Route exact path="/:category" render={(params) => (
+                        <CategoryPage posts={this.props.posts} category={params.match.params}/>
         )}/>
                                                      
       </div>
