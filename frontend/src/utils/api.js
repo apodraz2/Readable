@@ -21,3 +21,17 @@ export function fetchPosts() {
         })
 }
 
+export function fetchCategoryPosts(category) {
+ 	let url = endpoint + '/'+ category + '/posts';
+  	
+  	return fetch(url, headers)
+  		.then((res) => { return (res.text()) } )
+  		.then((data) => { 
+      		let jsonData = JSON.parse(data);
+      		return jsonData;
+    	})
+  		.catch((e) => {
+            console.log("Error:", e)
+        });
+}
+

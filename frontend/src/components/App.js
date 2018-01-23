@@ -13,7 +13,7 @@ class App extends Component {
 
   componentDidMount() {
     API.fetchPosts().then((posts) => {
-      	console.log(posts);
+      	
      	this.props.fetchPosts(posts);
       	
     });

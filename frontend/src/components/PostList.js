@@ -4,7 +4,7 @@ import * as Date from '../utils/date.js';
 
 class PostList extends Component {
   render() {
-    
+    console.log(this.props);
     const postList = this.props.postList.posts;
     
   	return (
