@@ -17,6 +17,12 @@ class App extends Component {
      	this.props.fetchPosts(posts);
       	
     });
+    API.fetchCategories().then((categories) => {
+      	
+      	console.log(categories);
+      	
+      	this.props.fetchCategories(categories);
+    });
     
   }
 
@@ -26,7 +32,7 @@ class App extends Component {
     return (
       <div className="App">
         <Route exact path='/' render={() => (
-          <MainPage postList={this.props.posts} />
+          <MainPage postList={this.props.posts} categoryList={this.props.categories} />
         )}/>
 		<Route exact path="/:category/:id" component={(params) => (
                         <DetailPage postList={this.props.posts} id={params.match.params.id}/>
@@ -40,16 +46,18 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({posts}) {
+function mapStateToProps({posts, categories}) {
   
 	return {
-     	 posts: posts
+     	posts: posts,
+      	categories: categories
     }
 }
 
 function mapDispatchToProps(dispatch) {
  	return {
-     	fetchPosts: (data) => dispatch(Actions.fetchPosts(data)) 
+     	fetchPosts: (data) => dispatch(Actions.fetchPosts(data)),
+      	fetchCategories: (data) => dispatch(Actions.fetchCategories(data))
     }
 }
 

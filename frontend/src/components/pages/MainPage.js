@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PostList from '.././PostList';
+import CategoryList from '.././CategoryList';
 class MainPage extends Component {
   
   render(){ 
@@ -11,6 +12,9 @@ class MainPage extends Component {
       	</div>
       	<div className="row">
       		<PostList postList={this.props.postList}/>
+      	</div>
+      	<div className ="row">
+      		<CategoryList categoryList={this.props.categoryList}/>
       	</div>
       </div>
     );

@@ -21,6 +21,20 @@ export function fetchPosts() {
         })
 }
 
+export function fetchCategories() {
+  let url = endpoint + "/categories";
+  
+  return fetch(url, headers)
+  	.then((res) => { return (res.text()) } )
+  	.then((data) => {
+    	let jsonData = JSON.parse(data);
+    	return jsonData;
+  	})
+  	.catch((e) => {
+    	console.log("Error:", e)
+  	});
+}
+
 export function fetchCategoryPosts(category) {
  	let url = endpoint + '/'+ category + '/posts';
   	
