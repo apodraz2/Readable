@@ -3,13 +3,14 @@ import React, {Component} from 'react';
 class CategoryList extends Component {
  	
   render(){
-    const categoryList = this.props.categoryList;
+    const categoryList = this.props.categoryList.categories.categories;
     
-    console.log(categoryList);
+    
     
     return(
     	<div>
       	<h1>Categories</h1>
+      {categoryList && categoryList.map((category) => <p>Category</p>)}
       	</div>
     ) 
   }
