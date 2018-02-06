@@ -38,7 +38,7 @@ class App extends Component {
                         <DetailPage postList={this.props.posts} id={params.match.params.id}/>
         )}/>
 		<Route exact path="/:category" render={(params) => (
-                        <CategoryPage posts={this.props.posts} category={params.match.params}/>
+                        <CategoryPage posts={this.props.posts} category={params.match}/>
         )}/>
                                                      
       </div>

@@ -2,7 +2,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  max-width: 600px;
 }
+
 
 .title {
  	text-align: center; 
@@ -10,7 +12,8 @@ body {
 
 .postList {
  	list-style: none; 
-  	float: left;
+  	width: 70%;
+  	margin-left: 20%;
 }
 
 .postListItem{
@@ -23,3 +26,12 @@ body {
 a {
  	text-decoration: none;
 }
+
+.categoryList {
+	float: left;
+  	margin-left: 30%;
+}
+
+
+
+

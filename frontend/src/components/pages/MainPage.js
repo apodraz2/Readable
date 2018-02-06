@@ -11,7 +11,7 @@ class MainPage extends Component {
     		<h1 className="center">Readable</h1>
       	</div>
       	<div className="row">
-      		<PostList postList={this.props.postList}/>
+      		<PostList postList={this.props.postList} />
       	</div>
       	<div className ="row">
       		<CategoryList categoryList={this.props.categoryList}/>

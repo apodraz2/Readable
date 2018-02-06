@@ -8,7 +8,7 @@ class PostList extends Component {
     const postList = this.props.postList.posts;
     
   	return (
-      	<div >
+      	<div className="container">
       	<ol className="postList">
       
       
