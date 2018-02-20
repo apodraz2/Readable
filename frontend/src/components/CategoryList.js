@@ -6,11 +6,11 @@ class CategoryList extends Component {
     const categoryList = this.props.categoryList.categories.categories;
     
     return(
-    	<div className="categoryList">
+    	<div>
       		<h2>Categories</h2>
       {categoryList && categoryList.map((category) => (
       			<div key={category.name} >
-    				<a href={`/${category.path}`}><h3>{category.name}</h3></a>
+    				<a href={`/${category.path}`}><h4 className="category-item">{category.name}</h4></a>
       			</div>
     	))}
       	</div>

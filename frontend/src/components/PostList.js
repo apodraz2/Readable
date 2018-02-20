@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import votePost from '../utils/api.js'; 
 import * as Date from '../utils/date.js';
 
 class PostList extends Component {
@@ -8,13 +8,13 @@ class PostList extends Component {
     const postList = this.props.postList.posts;
     
   	return (
-      	<div className="container">
-      	<ol className="postList">
+      	
+      	<ol className="post-list">
       
       
       		{typeof postList !== 'undefined' && postList.length > 0 && postList.map((post) => (
       
-       			<li key={post.id} className='postListItem'>
+       			<li key={post.id} className='post-container post-list-item'>
       				<a className="postLink" href={`/${post.category}/${post.id}`}>
       					<div>
       						<p>Posted on: {Date.getMonth(post.timestamp)}/{Date.getDay(post.timestamp)}/{Date.getYear(post.timestamp)}</p>
@@ -22,7 +22,10 @@ class PostList extends Component {
       						<p>{post.body}</p>
       						<h6>Score: {post.voteScore}</h6>
       						<h6>Author: {post.author}</h6>
-      					</div>
+							<button onClick="${votePost(post.id, 'upVote'}" type="button" className="btn btn-primary btn-sm">Vote Up</button>
+      					
+							<a href="#"><button type="button" className="btn btn-primary btn-sm">Vote Down</button></a>
+						</div>
 					</a>
       			</li>
 				
@@ -30,7 +33,6 @@ class PostList extends Component {
   			}
 			
       	</ol>
-      </div>
       
     )
   }

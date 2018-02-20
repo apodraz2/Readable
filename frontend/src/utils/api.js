@@ -49,3 +49,15 @@ export function fetchCategoryPosts(category) {
         });
 }
 
+export function votePost(postId, vote) {
+ 	return fetch(`${endpoint}/posts/${postId}`, {
+     	method: 'POST',
+      	headers: headers,
+      	body: JSON.stringify({option: vote ? 'upVote' : 'downVote'})
+    })
+    .then((res) => res.json())
+  	.catch((e) => {
+    	console.log("Error: " + e);
+    })
+}
+
