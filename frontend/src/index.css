@@ -27,7 +27,7 @@ body {
 }
 
 .post-list-item{
-  	padding-left: 10%;
+  	padding-left: 5%;
 }
 
 a {
@@ -50,7 +50,6 @@ a {
   	background-color: black;
   	border-color: gray;
   	width: 100%;
-  	max-width: 700px;
 }
 
 .bottom-button:hover {

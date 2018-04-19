@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PostList from '../PostList';
 
 class CategoryPage extends Component {
   
@@ -8,7 +7,6 @@ class CategoryPage extends Component {
   }
   
   render(){
-    console.log(this.props);
     const category = this.props.category.url;
     
     const categoryPosts = this.props.postList;

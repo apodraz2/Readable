@@ -8,19 +8,38 @@ import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
 import CategoryPage from './pages/CategoryPage';
 import NewPostPage from './pages/NewPostPage';
+import EditPostPage from './pages/EditPostPage';
 import './App.css';
 
 class App extends Component {
 
+  	getPosts = () => {
+  		API.fetchPosts().then((posts) => {
+      	
+     		this.props.fetchPosts(posts);
+      	
+    	});
+  	};
+
+	deletePost = (postId) => {
+  		API.deletePost(postId)
+    		.then(() => {
+          	let tempPosts = this.props.posts.posts.map((post) => {
+              	if(post.id === postId){
+              		post.deleted = true;
+                  	return post;
+              	}
+              	return post;
+            });
+          	this.props.fetchPosts(tempPosts);
+      	
+    	});
+    
+  	};
+
   componentDidMount() {
-    API.fetchPosts().then((posts) => {
-      	
-     	this.props.fetchPosts(posts);
-      	
-    });
+    this.getPosts();
     API.fetchCategories().then((categories) => {
-      	
-      	console.log(categories);
       	
       	this.props.fetchCategories(categories);
     });
@@ -28,23 +47,25 @@ class App extends Component {
   }
 
   render() {
-    
-    console.log(this.props);
     return (
       <div className="App">
       	<Switch>
-        <Route exact path='/' render={() => (
-          	<MainPage postList={this.props.posts} categoryList={this.props.categories} />
-        )}/>
-		<Route exact path="/:category/:id" component={(params) => (
-                        <DetailPage postList={this.props.posts} id={params.match.params.id}/>
-        )}/>
-		<Route exact path="/newpost" render={() => (
-        	<NewPostPage />                                    
-        )}/>
-		<Route exact path="/:category" render={(params) => (
+        	<Route exact path='/' render={() => (
+          		<MainPage postList={this.props.posts} categoryList={this.props.categories} deletePost={this.deletePost} />
+        	)}/>
+			<Route exact path="/edit/:id" render={() => (
+            	<EditPostPage posts={this.props.posts} categories={this.props.categories} />
+        	)}/>
+			<Route exact path="/newpost" render={() => (
+        		<NewPostPage />                                    
+        	)}/>
+			<Route exact path="/:category" render={(params) => (
                         <CategoryPage posts={this.props.posts} category={params.match}/>
-        )}/>
+        	)}/>
+			<Route exact path="/:category/:id" component={(params) => (
+                        <DetailPage postList={this.props.posts} id={params.match.params.id}/>
+        	)}/>
+		
 		</Switch>
 		
                                                      

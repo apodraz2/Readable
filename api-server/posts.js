@@ -26,6 +26,7 @@ const defaultData = {
 }
 
 function getData (token) {
+  console.log('getData')
   let data = db[token]
   if (data == null) {
     data = db[token] = clone(defaultData)
@@ -34,6 +35,7 @@ function getData (token) {
 }
 
 function getByCategory (token, category) {
+  console.log('getByCategory')
   return new Promise((res) => {
     let posts = getData(token)
     let keys = Object.keys(posts)
@@ -43,6 +45,7 @@ function getByCategory (token, category) {
 }
 
 function get (token, id) {
+  console.log('get')
   return new Promise((res) => {
     const posts = getData(token)
     res(
@@ -54,6 +57,7 @@ function get (token, id) {
 }
 
 function getAll (token) {
+  console.log('getAll')
   return new Promise((res) => {
     const posts = getData(token)
     let keys = Object.keys(posts)
@@ -63,6 +67,7 @@ function getAll (token) {
 }
 
 function add (token, post) {
+  console.log('add')
   return new Promise((res) => {
     let posts = getData(token)
     
@@ -82,6 +87,7 @@ function add (token, post) {
 }
 
 function vote (token, id, option) {
+  console.log('vote')
   return new Promise((res) => {
     let posts = getData(token)
     post = posts[id]
@@ -100,6 +106,7 @@ function vote (token, id, option) {
 }
 
 function disable (token, id) {
+  	console.log('disable')
     return new Promise((res) => {
       let posts = getData(token)
       posts[id].deleted = true
@@ -108,6 +115,7 @@ function disable (token, id) {
 }
 
 function edit (token, id, post) {
+  	console.log('edit');
     return new Promise((res) => {
         let posts = getData(token)
         for (prop in post) {
