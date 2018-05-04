@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router';
 
 class PostForm extends Component {
   render() {
@@ -14,6 +15,7 @@ class PostForm extends Component {
                         author: this.author.value || 'Anon',
                         category: this.category.value
                     })
+      				
                 }}>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
@@ -54,4 +56,4 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+export default withRouter(PostForm);

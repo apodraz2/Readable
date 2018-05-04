@@ -1,25 +1,55 @@
-const endpoint = `${process.env.REACT_APP_BACKEND}`;
+const endpoint = `${process.env.REACT_APP_BACKEND}` || 'http://localhost:3001';
+
+const cred = ((endpoint === `${process.env.REACT_APP_BACKEND}`) ? 'include' : 'true');
+
 
 const headers = { headers: { 'Authorization': 'whatever-you-want' },
-                 credentials: 'include' }; 
+                 credentials: cred }; 
 
 const Authorization = {'Authorization': 'whatever-you-want'};
 
 
 export function fetchPosts() {
   	let url = endpoint + '/posts';
-  	console.log(url);
     return fetch(url, headers)
   		.then( (res) => { return(res.text()) })
         .then((data) => { 
       		
       		let jsonData = JSON.parse(data);
-      		
       		return jsonData;
     	})
         .catch((e) => {
             console.log("Error:", e)
         })
+}
+
+export function fetchPost(postId) {
+  let url = `${endpoint}/posts/${postId}`;
+  
+  return fetch(url, headers)
+  	.then((res) => res.json())
+	.catch((e) => {
+    	console.log("Error:", e);
+  	})
+}
+
+export function addPost(post) {
+	let url = endpoint + "/posts";
+  	
+  	return fetch(url, {
+        method: 'POST', 
+      	headers: new Headers({
+            Authorization,
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+		}),
+      	credentials: cred,
+        body: JSON.stringify(post)
+		})
+		.then((data) => data.json())
+		.catch((e) => {
+        	console.log("Error: ", e);
+        });
 }
 
 export function fetchCategories() {
@@ -37,7 +67,7 @@ export function fetchCategories() {
 }
 
 export function fetchCategoryPosts(category) {
- 	let url = endpoint + '/'+ category + '/posts';
+ 	let url = `${endpoint}${category}/posts`;
   	
   	return fetch(url, headers)
   		.then((res) => { return (res.text()) } )
@@ -51,9 +81,15 @@ export function fetchCategoryPosts(category) {
 }
 
 export function votePost(postId, vote) {
- 	return fetch(`${endpoint}/posts/${postId}`, {
+  	let url = `${endpoint}/posts/${postId}`;
+ 	return fetch(url, {
      	method: 'POST',
-      	headers: headers,
+      	headers: new Headers({
+            Authorization,
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+		}),
+      	credentials: cred,
       	body: JSON.stringify({option: vote ? 'upVote' : 'downVote'})
     })
     .then((res) => res.json())
@@ -63,27 +99,33 @@ export function votePost(postId, vote) {
 }
 
 export function deletePost(postId) {
-    return fetch(`${endpoint}/posts/${postId}`, {
-        method: 'DELETE',
-        headers: headers
-    })
+    let url = `${endpoint}/posts/${postId}`;
+ 	return fetch(url, {
+     	method: 'DELETE',
+      	headers: new Headers({
+            Authorization,
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+		}),
+      	credentials: cred
+    	})
         .then((res) => res.json())
         .catch((e) => {
             console.log("Error:", e)
         })
 }
 
-export function editPost(id, postData) {
-  	console.log(`${endpoint}/posts/${id}`);
-    return fetch(`${endpoint}/posts/${id}`, {
+export function editPost(post, postId) {
+    return fetch(`${endpoint}/posts/${postId}`, {
         method: 'PUT',
         headers: new Headers({
             Authorization,
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
 		}),
-        body: JSON.stringify(postData)
-    })
+      	credentials: cred,
+        body: JSON.stringify(post)
+		})
         .then((res) => res.json())
         .catch((e) => {
             console.log("Error:", e)
@@ -91,22 +133,32 @@ export function editPost(id, postData) {
 }
 
 export function fetchComments(id) {
-    if (id) {
-        return fetch(`${endpoint}/posts/${id}/comments`, {method: 'GET', headers})
-            .then((res) => res.json())
-            .catch((e) => {
-                console.log("Error:", e)
-            })
-    } else {
-        console.error("id can't be null")
-    }
+  let url = endpoint + '/posts/' + id + '/comments';
+  
+  return fetch(url, headers)
+    .then( (res) => { 
+    	return res.text();
+     })
+     .then((data) => { 
+      	let jsonData = JSON.parse(data);
+      	return jsonData;
+      })
+      .catch((e) => {
+        console.log("Error:", e)
+      })
 }
 
 export function deleteComment(commentId) {
-    return fetch(`${endpoint}/comments/${commentId}`, {
-        method: 'DELETE',
-        headers: headers
-    })
+  	let url = `${endpoint}/comments/${commentId}`;
+    return fetch(url, {
+     	method: 'DELETE',
+      	headers: new Headers({
+            Authorization,
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+		}),
+      	credentials: cred
+    	})
         .then((res) => res.json())
         .catch((e) => {
             console.log("Error:", e)
@@ -114,9 +166,15 @@ export function deleteComment(commentId) {
 }
 
 export function voteComment(commentId, vote) {
-    return fetch(`${endpoint}/comments/${commentId}`, {
-        method: 'POST',
-        headers: headers,
+  	let url = `${endpoint}/comments/${commentId}`;
+    return fetch(url, {
+     	method: 'POST',
+      	headers: new Headers({
+            Authorization,
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+		}),
+      	credentials: cred,
         body: JSON.stringify({option: vote ? 'upVote' : 'downVote'})
     })
         .then((res) => res.json())
@@ -126,36 +184,47 @@ export function voteComment(commentId, vote) {
 }
 
 export function addComment(comment) {
-    return fetch(`${endpoint}/comments/`, {
-        method: 'POST',
-        headers: headers,
+    let url = endpoint + "/comments";
+  	
+  	return fetch(url, {
+        method: 'POST', 
+      	headers: new Headers({
+            Authorization,
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+		}),
+      	credentials: cred,
         body: JSON.stringify(comment)
-    })
-        .then((res) => res.json())
-        .catch((e) => {
-            console.log("Error:", e)
-        })
+		})
+		.then((data) => data.json())
+		.catch((e) => {
+        	console.log("Error: ", e);
+        });
 }
 
-export function editComment(id, commentData) {
+export function editComment(id, comment) {
     return fetch(`${endpoint}/comments/${id}`, {
         method: 'PUT',
-        headers: headers,
-        body: JSON.stringify(commentData)
-    })
+        headers: new Headers({
+            Authorization,
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+		}),
+      	credentials: cred,
+        body: JSON.stringify(comment)
+		})
         .then((res) => res.json())
         .catch((e) => {
             console.log("Error:", e)
         })
 }
 
-export function getComment(id) {
-    return fetch(`${endpoint}/comments/${id}`, {
-        method: 'GET',
-        headers: headers
-    })
-        .then((res) => res.json())
-        .catch((e) => {
-            console.log("Error:", e)
-        })
+export function fetchComment(id) {
+    let url = `${endpoint}/comments/${id}`;
+  
+  return fetch(url, headers)
+  	.then((res) => res.json())
+	.catch((e) => {
+    	console.log("Error:", e);
+  	})
 }

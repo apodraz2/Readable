@@ -13,6 +13,7 @@ const app = express()
 app.use(express.static('public'))
 app.use(cors())
 
+let numHits = 0;
 
 app.get('/', (req, res) => {
   const help = `
@@ -153,9 +154,14 @@ app.get('/:category/posts', (req, res) => {
 })
 
 app.get('/posts', (req, res) => {
+  	numHits++;
+  	console.log(numHits);
     posts.getAll(req.token)
       .then(
-          (data) => res.send(data),
+          (data) => {
+            console.log(data);
+            res.send(data);
+          },
           (error) => {
               console.error(error)
               res.status(500).send({
@@ -166,6 +172,7 @@ app.get('/posts', (req, res) => {
 })
 
 app.post('/posts', bodyParser.json(), (req, res) => {
+  	
   	
     posts.add(req.token, req.body)
       .then(
@@ -196,10 +203,13 @@ app.delete('/posts/:id', (req, res) => {
     posts.disable(req.token, req.params.id)
       .then(
           (post) => {
-              comments.disableByParent(req.token, post)
+            comments.disableByParent(req.token, post);
+            return post;
           })
       .then(
-          (data) => res.send(data),
+          (data) => {
+            res.send(data);
+          },
           (error) => {
               console.error(error)
               res.status(500).send({

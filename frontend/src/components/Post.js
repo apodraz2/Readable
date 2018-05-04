@@ -1,30 +1,30 @@
 import React, {Component} from 'react';
-import { votePost } from '../utils/api.js'; 
+import { connect } from 'react-redux';
 import * as Date from '../utils/date.js';
-
-import * as API from '../utils/api';
+import * as Actions from '../actions/index';
+import {withRouter} from 'react-router';
 
 class Post extends Component {
-  
-  
-  state = {
-   	postScore: '',
-    numComments: ''
-  }
-  
+	
   componentDidMount() {
-    this.setState({ postScore: this.props.post.voteScore });
-    const postId = this.props.post.id;
-    API.fetchComments(postId).then(comments => {
-      	this.setState({numComments: comments.length});
-  		
-  	});
+    if(this.props.post){
+    	this.props.fetchComments(this.props.post.id);
+    } else {
+     	this.props.fetchComments(this.props.id); 
+    }
   }
   
   render() {
-    let post = this.props.post;
-    let score = this.state.postScore;
+    let post = {};
+    if(this.props.post) {
+    	post = this.props.post; 
+    }
     const deletePost = this.props.deletePost;
+    const commentList = this.props.comments;
+    let comments = [];
+    if(commentList[post.id]){
+      comments = commentList[post.id]; 
+    }
     
     return (
     	<div>
@@ -33,23 +33,21 @@ class Post extends Component {
       				<h3>{post.title}</h3>
 				</a>
       		<p>{post.body}</p>
-			<h6>Number of Comments: {this.state.numComments}</h6>
-      		<h6>Score: {score}</h6>
+			<h6>Number of Comments: {comments.length}</h6>
+      		<h6>Score: {post.voteScore}</h6>
       		<h6>Author: {post.author}</h6>
 			<button onClick={ () => {
-					votePost(post.id, true);
-					
-					this.setState({postScore: score + 1});
+					this.props.votePost(post.id, true);
 					
 				}} type="button" className="btn btn-primary btn-sm">Vote Up</button>
       		<button onClick={ () => {
-					votePost(post.id, true);
-					this.setState({postScore: score - 1});
+					this.props.votePost(post.id, false);
 				
 				}} type="button" className="btn btn-primary btn-sm">Vote Down</button>
 
 			<button onClick={ () => {
 					deletePost(post.id);
+					this.props.history.push('');
 				}} type="button" className="btn btn-primary btn-sm">Delete</button>
 
 			<a href={'/edit/' + post.id}> <button type="button" className="btn btn-primary btn-sm">Edit</button></a>
@@ -58,6 +56,12 @@ class Post extends Component {
   };
 }
 
-export default Post;
+function mapStateToProps({comments}) {
+  return {
+    comments: comments.comments
+  }
+}
+
+export default connect(mapStateToProps, Actions)(withRouter(Post));
 
 

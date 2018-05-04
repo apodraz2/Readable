@@ -45,11 +45,11 @@ a {
 }
 
 .bottom-button {
-  	position: fixed;
 	bottom: 0;
   	background-color: black;
   	border-color: gray;
   	width: 100%;
+  	
 }
 
 .bottom-button:hover {

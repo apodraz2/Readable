@@ -3,35 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import * as Actions from "../../actions";
 import PostForm from "../PostForm";
-import * as API from "../../utils/api";
 
 class EditPostPage extends Component {
-    submitForm = (data) => {
-        const {id} = this.props.match.params;
-        const {posts} = this.props;
-		
-        let post = posts.filter((p) => {
-            return p.id === id
-        });
-		
-        if (post.length) {
-            post = post[0];
-        } else {
-            post = null;
-        }
-        if (post) {
-            API.editPost(id, {
-                title: data.title,
-                body: data.body
-            }).then((post) => {
-              	console.log(post.title);
-                this.props.editPost(post);
-                this.props.history.push(`/${post.category}/${post.id}`);
-            }).catch((e) => {
-                console.error("Error editing post: ", e)
-            });
-        }
-    };
 
     render() {
         const {id} = this.props.match.params;
@@ -53,9 +26,8 @@ class EditPostPage extends Component {
                     <div className="container mt-2">
                         <PostForm category={post.category} categories={categories.categories}
                                    initialData={post}
-                                   onSubmitForm={(data) => {
-                                       this.submitForm(data)
-                                   }}
+                                   onSubmitForm={this.props.editPost}
+          						   postId={post.id}
                         />
                     </div>
                 ) : (<div/>)}
@@ -74,7 +46,7 @@ function mapStateToProps({posts, categories}) {
 function mapDispatchToProps(dispatch) {
     return {
         createPost: (post) => dispatch(Actions.createPost(post)),
-        editPost: (post) => dispatch(Actions.editPost(post)),
+        editPost: (post, postId) => dispatch(Actions.editPost(post, postId)),
     }
 }
 

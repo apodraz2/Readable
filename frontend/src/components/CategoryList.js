@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
 class CategoryList extends Component {
- 	
+
   render(){
-    const categoryList = this.props.categoryList.categories.categories;
-    
+    const categories = this.props.categoryList.categories;
     return(
     	<div>
       		<h2>Categories</h2>
-      {categoryList && categoryList.map((category) => (
+      {categories && categories.map((category) => (
       			<div key={category.name} >
     				<a href={`/${category.path}`}><h4 className="category-item">{category.name}</h4></a>
       			</div>
@@ -18,5 +18,12 @@ class CategoryList extends Component {
   }
 }
 
-export default CategoryList;
+function mapStateToProps(state) {
+	return {
+		categoryList: state.categories.categories
+	}
+}
+
+
+export default connect(mapStateToProps)(CategoryList);
 

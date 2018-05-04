@@ -2,26 +2,27 @@ import React, { Component } from 'react';
 import PostList from '.././PostList';
 import CategoryList from '.././CategoryList';
 import * as Constants from '../../utils/constants';
+
+
 class MainPage extends Component {
   state = {
   	sortMode: Constants.SORT_BY_SCORE
   }
   
   render(){ 
+
     return (
       <div className="container-fluid">
-      	<div className="row">
-    		<h1 className="title">Readable</h1>
-      	</div>
+      	
       	<button type="button" onClick={() => this.setState({sortMode: Constants.SORT_BY_SCORE})}>Sort by score</button>
 		<button type="button" onClick={() => this.setState({sortMode: Constants.SORT_BY_NEWEST})}>Sort by date</button>
       	<div className="row">
       		
       		<div className="col-md-9">
-      			<PostList postList={this.props.postList} deletePost={this.props.deletePost} sortMode={this.state.sortMode}/>
+      			<PostList sortMode={this.state.sortMode} postList={this.props.postList}/>
       		</div>
       		<div className="col-md-3 category-list">
-      			<CategoryList categoryList={this.props.categoryList}/>
+      			<CategoryList categories={this.props.categories}/>
       		</div>      
       	</div>
       	
@@ -31,6 +32,8 @@ class MainPage extends Component {
     );
   }
 }
+
+
 
 export default MainPage;
 
