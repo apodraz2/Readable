@@ -46,7 +46,7 @@ class CommentList extends Component {
 							
 							}} type="button" className="btn btn-primary btn-sm">Delete</button>
 
-						<a href={'/edit/' + comment.id}> <button type="button" className="btn btn-primary btn-sm">Edit</button></a>
+						<a href={'/editcomment/' + comment.id}> <button type="button" className="btn btn-primary btn-sm">Edit</button></a>
 						
              		</li>
             	))

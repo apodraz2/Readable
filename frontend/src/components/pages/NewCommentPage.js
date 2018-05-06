@@ -3,6 +3,7 @@ import * as API from '../../utils/api';
 import * as Actions from '../../actions';
 import { connect } from 'react-redux';
 import * as UUIDV1 from 'uuid/v1';
+import { withRouter } from 'react-router';
 
 class NewCommentPage extends Component {
   
@@ -19,13 +20,14 @@ class NewCommentPage extends Component {
                             e.preventDefault();
 							const id = UUIDV1();
                             API.addComment({id: id,
+                                author: this.author.value,
                                 body: this.body.value,
                                 timestamp: new Date().getTime(),
                               	parentId: this.props.id
                             }).then((comment) => {
-                              	console.log(comment);
 								comment.parentId = this.props.id;
                               	this.props.addComment(comment);
+                              	this.props.history.push('/');
                                 
                             })
                                 .catch((e) => {
@@ -42,11 +44,11 @@ class NewCommentPage extends Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="body">Author</label>
-                                <textarea type="text" className="form-control" id="body"
+                                <textarea type="text" className="form-control" id="author"
                                           placeholder="Author" rows={1}
                                           
                                           required
-                                          ref={(body) => this.body = body}/>
+                                          ref={(author) => this.author = author}/>
                             </div>
                             <button type="submit" className="btn btn-primary">Add comment</button>
                         </form>
@@ -69,4 +71,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewCommentPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewCommentPage));

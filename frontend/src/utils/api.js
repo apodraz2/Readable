@@ -1,12 +1,10 @@
-const endpoint = `${process.env.REACT_APP_BACKEND}` || 'http://localhost:3001';
+const endpoint = ((`${process.env.REACT_APP_BACKED}`) ? `${process.env.REACT_APP_BACKEND}` : 'http://localhost:3001');
 
-const cred = ((endpoint === `${process.env.REACT_APP_BACKEND}`) ? 'include' : 'true');
+const cred = ((endpoint === `${process.env.REACT_APP_BACKEND}`) ? 'include' : "same-origin");
 
-
-const headers = { headers: { 'Authorization': 'whatever-you-want' },
-                 credentials: cred }; 
-
-const Authorization = {'Authorization': 'whatever-you-want'};
+const auth = 'whatever-you-want';
+const headers = { headers: { 'Authorization': auth },
+                 credentials: cred };
 
 
 export function fetchPosts() {
@@ -39,7 +37,7 @@ export function addPost(post) {
   	return fetch(url, {
         method: 'POST', 
       	headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
 		}),
@@ -85,7 +83,7 @@ export function votePost(postId, vote) {
  	return fetch(url, {
      	method: 'POST',
       	headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
 		}),
@@ -103,7 +101,7 @@ export function deletePost(postId) {
  	return fetch(url, {
      	method: 'DELETE',
       	headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
 		}),
@@ -119,7 +117,7 @@ export function editPost(post, postId) {
     return fetch(`${endpoint}/posts/${postId}`, {
         method: 'PUT',
         headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
 		}),
@@ -153,7 +151,7 @@ export function deleteComment(commentId) {
     return fetch(url, {
      	method: 'DELETE',
       	headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
 		}),
@@ -170,7 +168,7 @@ export function voteComment(commentId, vote) {
     return fetch(url, {
      	method: 'POST',
       	headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
 		}),
@@ -189,7 +187,7 @@ export function addComment(comment) {
   	return fetch(url, {
         method: 'POST', 
       	headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
 		}),
@@ -206,7 +204,7 @@ export function editComment(id, comment) {
     return fetch(`${endpoint}/comments/${id}`, {
         method: 'PUT',
         headers: new Headers({
-            Authorization,
+            'Authorization': auth,
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
 		}),
@@ -220,6 +218,7 @@ export function editComment(id, comment) {
 }
 
 export function fetchComment(id) {
+  	console.log('fetchComment');
     let url = `${endpoint}/comments/${id}`;
   
   return fetch(url, headers)

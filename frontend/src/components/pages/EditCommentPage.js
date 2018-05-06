@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as API from '../../utils/api';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions';
+import { withRouter } from 'react-router';
 
 class EditCommentPage extends Component {
   state = {
@@ -32,6 +33,7 @@ class EditCommentPage extends Component {
 								this.setState(comment);
                               	comment.parentId = this.state.comment.parentId;
                               	this.props.editComment(comment);
+                              	this.props.history.push('/');
                                 
                             })
                                 .catch((e) => {
@@ -74,4 +76,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditCommentPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditCommentPage));

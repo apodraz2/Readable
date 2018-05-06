@@ -19,7 +19,7 @@ class PostList extends Component {
   	return (
       	
       	<ol className="post-list">
-      		{postList.length > 0 && PostList.filterPosts(postList, true).sort((p1, p2) => {
+      		{postList && postList.length > 0 && PostList.filterPosts(postList, true).sort((p1, p2) => {
 
                             switch (sortMode) {
                                 case Constants.SORT_BY_SCORE:

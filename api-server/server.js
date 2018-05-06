@@ -154,12 +154,9 @@ app.get('/:category/posts', (req, res) => {
 })
 
 app.get('/posts', (req, res) => {
-  	numHits++;
-  	console.log(numHits);
     posts.getAll(req.token)
       .then(
           (data) => {
-            console.log(data);
             res.send(data);
           },
           (error) => {

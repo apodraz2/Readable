@@ -49,7 +49,7 @@ class App extends Component {
 			<Route exact path="/:category/:id" component={(params) => (
                         <DetailPage postList={this.props.posts} id={params.match.params.id}/>
         	)}/>
-			<Route path="/deleted" render={() => (<ErrorPage/>)}/>
+			<Route component={ErrorPage}/>
 			
 		
 		</Switch>
